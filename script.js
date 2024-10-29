@@ -9,7 +9,7 @@ const orderedList = document.getElementById("shortcut-list");
 let draggedItem = null;
 
 orderedList.addEventListener("dragstart", (event) => {
-  draggedItem = event.target;
+  draggedItem = event.currentTargett;
   event.target.classList.add("dragging");
 });
 
@@ -19,3 +19,17 @@ orderedList.addEventListener("dragend", (event) => {
   draggedItem = null;
 });
 
+orderedList.addEventListener("dragover", (event) => {
+  event.preventDefault();
+});
+
+orderedList.addEventListener("drop", (event) => {
+  event.preventDefault();
+  const targetItem = event.target.closest("li");
+  if (targetItem && targetItem !== draggedItem) {
+    orderedList.insertBefore(draggedItem, targetItem);
+  }
+  // if (event.target.className === "ol" && event.target !== draggedItem) {
+  //   orderedList.insertBefore(draggedItem, event.target.nextSibling);
+  // }
+});
