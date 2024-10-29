@@ -8,16 +8,27 @@ document.querySelectorAll("a").forEach((link) => {
 const orderedList = document.getElementById("shortcut-list");
 let draggedItem = null;
 
-orderedList.addEventListener("dragstart", (event) => {
-  draggedItem = event.currentTargett;
-  event.target.classList.add("dragging");
-});
+orderedList.querySelectorAll("li").forEach((item) => {
+  item.addEventListener("dragstart", (event) => {
+    draggedItem = event.currentTarget;
+    event.target.classList.add("dragging");
+  });
 
-orderedList.addEventListener("dragend", (event) => {
-  // reset the transparency
-  event.target.classList.remove("dragging");
-  draggedItem = null;
+  item.addEventListener("dragend", (event) => {
+    event.target.classList.remove("dragging");
+    draggedItem = null;
+  });
 });
+// orderedList.addEventListener("dragstart", (event) => {
+//   draggedItem = event.currentTargett;
+//   event.target.classList.add("dragging");
+// });
+
+// orderedList.addEventListener("dragend", (event) => {
+//   // reset the transparency
+//   event.target.classList.remove("dragging");
+//   draggedItem = null;
+// });
 
 orderedList.addEventListener("dragover", (event) => {
   event.preventDefault();
@@ -29,7 +40,6 @@ orderedList.addEventListener("drop", (event) => {
   if (targetItem && targetItem !== draggedItem) {
     orderedList.insertBefore(draggedItem, targetItem);
   }
-  // if (event.target.className === "ol" && event.target !== draggedItem) {
-  //   orderedList.insertBefore(draggedItem, event.target.nextSibling);
-  // }
 });
+
+
